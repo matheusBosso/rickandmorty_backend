@@ -1,7 +1,7 @@
 from src.models import db
 
 class CharacterEpisode(db.Model):
-    __tablename__ = 'character_episodes'
+    __tablename__ = 'character_episode'
 
     character_id = db.Column(db.Integer, db.ForeignKey('characters.id'), nullable=False, primary_key=True)
     episode_id = db.Column(db.Integer, db.ForeignKey('episodes.id'), nullable=False, primary_key=True)
