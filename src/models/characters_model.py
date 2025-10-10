@@ -6,7 +6,7 @@ class Character(db.Model):
     name = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(50), nullable=False)
     species = db.Column(db.String(50), nullable=False)
-    type = db.Column(db.String(50), nullable=False)
+    type = db.Column(db.String(50), nullable=True)
     gender = db.Column(db.String(10), nullable=False)
 
 
