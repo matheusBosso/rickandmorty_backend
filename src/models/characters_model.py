@@ -19,7 +19,7 @@ class Character(db.Model):
     location = db.relationship('Location', foreign_keys=[location_id], back_populates='residing_characters', uselist=False, lazy=True)
 
     # relacao N para N
-    episodes = db.relationship('Episode', secondary='character_episodes', back_populates='characters', lazy=True)
+    episodes = db.relationship('Episode', secondary='character_episode', back_populates='characters', lazy=True)
 
     def __repr__(self):
         return f"<Character {self.name}>"

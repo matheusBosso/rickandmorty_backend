@@ -8,7 +8,7 @@ class Episode(db.Model):
     episode = db.Column(db.String(20), nullable=False)
 
     #relacao N para N
-    characters = db.relationship('Character', secondary='character_episodes', back_populates='episodes', lazy=True)
+    characters = db.relationship('Character', secondary='character_episode', back_populates='episodes', lazy=True)
 
     def __repr__(self):
         return f"<Episode {self.name}>"
