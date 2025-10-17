@@ -6,4 +6,4 @@ characters_controller = CharactersController()
 
 @characters_bp.route('/', methods=['GET'])
 def get_characters():
-    return characters_controller.get_characters()
+   return characters_controller.get_characters()
