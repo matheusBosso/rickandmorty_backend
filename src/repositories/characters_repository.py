@@ -1,24 +1,13 @@
-import requests
 from src.models.characters_model import Character
 
 class CharactersRepository:
-    def get_characters_by_name(self, name: str):
-        all_characters = []
-        page = 1
+    def get_characters_by_name(self, name: str, limit: int, offset: int):
+            characters_query = Character.query.filter(Character.name.ilike(f'%{name}%'))
 
-        while True:
-            url = f"https://rickandmortyapi.com/api/character/?name={name}&page={page}"
-            response = requests.get(url)
+            characters = characters_query.limit(limit).offset(offset).all()
+            characters_count = characters_query.count()
+            
 
-            if response.status_code != 200:
-                break
-
-            data = response.json()
-            all_characters.extend(data['results'])
-
-            if not data['info']['next']:
-                break
-
-            page += 1
-
-        return all_characters
+            
+            return characters, characters_count
+        

@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify
 from src.services.characters_services import CharactersService
 
 class CharactersController:
@@ -6,19 +6,17 @@ class CharactersController:
     def __init__(self):
         self.characters_service = CharactersService()
     
-    def get_characters(self):
+    def get_characters(self, page, name):
         try:
-            name = request.args.get('name', '')
-            page = int(request.args.get('page', 1))
 
-            data = self.characters_service.get_characters(name, page)
+            data = self.characters_service.get_characters(page, name)
 
             characters = data.get('results', [])
 
             return jsonify({
                 'page': data.get('page', 1),
                 'per_page': data.get('per_page', 20),
-                'total': data.get('total', len(characters)),
+                'page_count': data.get('page_count', 0),
                 'data': [
                     {
                         'id': character.id,
@@ -27,7 +25,7 @@ class CharactersController:
                         'species': character.species,
                         'type': character.type,
                     }
-                    for character in characters
+                    for character in data.get('results', [])
                 ]
             })
         except Exception:
