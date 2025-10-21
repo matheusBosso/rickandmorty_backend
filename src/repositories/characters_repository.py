@@ -10,4 +10,8 @@ class CharactersRepository:
 
             
             return characters, characters_count
+    
+    def get_character_by_id(self, character_id: int):
+        character = Character.query.get(character_id)
+        return character
         

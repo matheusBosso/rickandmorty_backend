@@ -9,7 +9,6 @@ class Character(db.Model):
     type = db.Column(db.String(50), nullable=True)
     gender = db.Column(db.String(10), nullable=False)
 
-
     origin_id = db.Column(db.Integer, db.ForeignKey('locations.id'), nullable=True)
     location_id = db.Column(db.Integer, db.ForeignKey('locations.id'), nullable=True)
 

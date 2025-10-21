@@ -21,3 +21,9 @@ class CharactersService:
             "page_count": page_count,
             "results": all_characters
         }
+    
+    def get_character_by_id(self, character_id: int):
+        character = self.characters_repository.get_character_by_id(character_id)
+        if not character:
+            return None
+        return character

@@ -32,3 +32,25 @@ class CharactersController:
             return jsonify({
                 'error': 'An error occurred while fetching characters.'
             }), 500
+        
+    def get_character_by_id(self, character_id):
+        try:
+                character = self.characters_service.get_character_by_id(character_id) # Fetch character by ID
+                if not character:
+                    return jsonify({
+                    'error': 'Character not found.'
+                }), 404
+                
+                return jsonify({
+                    'id': character.id,
+                    'name': character.name,
+                    'status': character.status,
+                    'species': character.species,
+                    'type': character.type,
+                })
+
+        except Exception:
+
+            return jsonify({
+                'error': 'An error occurred while fetching the character.'
+            }), 500

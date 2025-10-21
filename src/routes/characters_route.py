@@ -9,3 +9,7 @@ def get_characters():
    page = request.args.get('page', default=1, type=int)
    name = request.args.get('name', default=None, type=str)
    return characters_controller.get_characters(page, name)
+
+@characters_bp.route('/<int:character_id>', methods=['GET'])
+def get_character_by_id(character_id):
+   return characters_controller.get_character_by_id(character_id)
