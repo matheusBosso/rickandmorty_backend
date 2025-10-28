@@ -23,6 +23,12 @@ class Character(db.Model):
     def __repr__(self):
         return f"<Character {self.name}>"
     
+    @property
+    def last_episode(self):
+        if not self.episodes:
+            return None
+        return max(self.episodes, key=lambda ep: ep.id)
+    
 #----------------------------Schemas----------------------------#
 
 class CharacterSchema(ma.Schema):
@@ -36,7 +42,7 @@ class CharacterSchemaGetAll(CharacterSchema):
     type = ma.String()
     gender = ma.String()
     origin = ma.Nested("LocationSchema")
-    episodes = ma.Nested("EpisodeSchema", many=True)
+    last_episode = ma.Nested("EpisodeSchema", attribute="last_episode")
 
 character_output_schema = CharacterSchema()   
 

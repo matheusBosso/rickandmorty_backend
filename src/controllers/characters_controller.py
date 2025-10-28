@@ -47,9 +47,11 @@ class CharactersController:
                 return jsonify({
                     'data': character_data
                 })
-
-        except Exception:
-
+    
+        except Exception as e:
+            import traceback
+            print("❌ ERRO NO CONTROLLER ❌")
+            print(traceback.format_exc())
             return jsonify({
-                'error': 'An error occurred while fetching the character.'
+                'error': str(e)
             }), 500
