@@ -32,7 +32,7 @@ class CharacterSchema(ma.Schema):
     image = ma.String()
     species = ma.String()
 
-class SchemaGetAll(CharacterSchema):
+class CharacterSchemaGetAll(CharacterSchema):
     type = ma.String()
     gender = ma.String()
     origin = ma.Nested("LocationSchema")
@@ -40,4 +40,4 @@ class SchemaGetAll(CharacterSchema):
 
 character_output_schema = CharacterSchema()   
 
-character_output_schema_get_all = SchemaGetAll()
+character_output_schema_get_all = CharacterSchemaGetAll()
