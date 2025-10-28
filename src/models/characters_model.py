@@ -1,4 +1,4 @@
-from src.models import db 
+from src.models import db, ma
 
 class Character(db.Model):
     __tablename__ = 'characters'
@@ -22,3 +22,22 @@ class Character(db.Model):
 
     def __repr__(self):
         return f"<Character {self.name}>"
+    
+#----------------------------Schemas----------------------------#
+
+class CharacterSchema(ma.Schema):
+    id = ma.Integer()
+    name = ma.String()
+    status = ma.String()
+    image = ma.String()
+    species = ma.String()
+
+class SchemaGetAll(CharacterSchema):
+    type = ma.String()
+    gender = ma.String()
+    origin = ma.Nested("LocationSchema")
+    episodes = ma.Nested("EpisodeSchema", many=True)
+
+character_output_schema = CharacterSchema()   
+
+character_output_schema_get_all = SchemaGetAll()

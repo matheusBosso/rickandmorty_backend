@@ -1,4 +1,4 @@
-from src.models import db
+from src.models import db, ma
 
 class Episode(db.Model):
     __tablename__ = 'episodes'
@@ -12,3 +12,12 @@ class Episode(db.Model):
 
     def __repr__(self):
         return f"<Episode {self.name}>"
+    
+#-----------------------------Schemas----------------------------#
+
+class EpisodeSchema(ma.Schema):
+    id = ma.Integer()
+    name = ma.String()
+    episode = ma.String()
+    air_date = ma.String()
+episode_output_schema = EpisodeSchema()

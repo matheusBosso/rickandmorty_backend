@@ -1,4 +1,4 @@
-from src.models import db
+from src.models import db, ma
 
 class Location(db.Model):
     __tablename__ = 'locations'
@@ -12,5 +12,21 @@ class Location(db.Model):
     origin_characters = db.relationship('Character', foreign_keys='Character.origin_id', back_populates='origin', uselist=True, lazy=True)
     residing_characters = db.relationship('Character', foreign_keys='Character.location_id', back_populates='location', uselist=True, lazy=True)
 
+    
+
     def __repr__(self):
         return f"<Location {self.name}>"
+    
+    @property
+    def resident_count(self):
+        return len(self.residing_characters)
+    
+#----------------------------Schemas----------------------------#
+
+class LocationSchema(ma.Schema):
+    id = ma.Integer()
+    name = ma.String()
+    type = ma.String()
+    dimension = ma.String()
+    resident_count = ma.Integer()
+location_output_schema = LocationSchema()

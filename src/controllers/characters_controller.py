@@ -1,5 +1,6 @@
 from flask import jsonify
 from src.services.characters_services import CharactersService
+from src.models.characters_model import character_output_schema, character_output_schema_get_all
 
 class CharactersController:
 
@@ -40,13 +41,11 @@ class CharactersController:
                     return jsonify({
                     'error': 'Character not found.'
                 }), 404
+
+                character_data = character_output_schema_get_all.dump(character)
                 
                 return jsonify({
-                    'id': character.id,
-                    'name': character.name,
-                    'status': character.status,
-                    'species': character.species,
-                    'type': character.type,
+                    'data': character_data
                 })
 
         except Exception:
