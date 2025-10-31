@@ -41,8 +41,9 @@ class CharacterSchema(ma.Schema):
 class CharacterSchemaGetAll(CharacterSchema):
     type = ma.String()
     gender = ma.String()
-    origin = ma.Nested("LocationSchema")
+    location = ma.Nested("LocationSchema")
     last_episode = ma.Nested("EpisodeSchema", attribute="last_episode")
+    origin = ma.String()
 
 character_output_schema = CharacterSchema()   
 
