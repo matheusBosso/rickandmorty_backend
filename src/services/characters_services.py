@@ -1,5 +1,7 @@
 from src.repositories.characters_repository import CharactersRepository  # Add this import
+from src.models.characters_model import character_output_schema_get_all, character_output_schema_get_by_id
 import math
+from werkzeug.exceptions import NotFound
 
 class CharactersService: 
 
@@ -15,15 +17,20 @@ class CharactersService:
 
         page_count = math.ceil(characters_count / limit)  # Calculate total number of pages
 
-        return {
+        data = {
             "page": page,
             "per_page": limit,
             "page_count": page_count,
-            "results": all_characters
+            "characters": all_characters
         }
+        
+        response_data = character_output_schema_get_all.dump(data)
+
+        return response_data
     
     def get_character_by_id(self, character_id: int):
         character = self.characters_repository.get_character_by_id(character_id)
         if not character:
-            return None
-        return character
+            raise NotFound
+        character_data = character_output_schema_get_by_id.dump(character)
+        return character_data

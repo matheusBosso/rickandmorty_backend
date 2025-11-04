@@ -38,13 +38,19 @@ class CharacterSchema(ma.Schema):
     image = ma.String()
     species = ma.String()
 
-class CharacterSchemaGetAll(CharacterSchema):
+class CharacterSchemaGetById(CharacterSchema):
     type = ma.String()
     gender = ma.String()
     location = ma.Nested("LocationSchema")
     last_episode = ma.Nested("EpisodeSchema", attribute="last_episode")
-    origin = ma.String()
+    origin = ma.Nested("LocationSchema")
 
-character_output_schema = CharacterSchema()   
+class CharacterSchemaGetAll(ma.Schema):
+    page = ma.Integer()
+    per_page = ma.Integer()
+    page_count = ma.Integer()
+    characters = ma.List(ma.Nested(CharacterSchema))
+
+character_output_schema_get_by_id = CharacterSchemaGetById()
 
 character_output_schema_get_all = CharacterSchemaGetAll()

@@ -1,6 +1,7 @@
 from flask import jsonify
 from src.services.characters_services import CharactersService
-from src.models.characters_model import character_output_schema, character_output_schema_get_all
+from src.utils.api_response import ApiResponse
+from werkzeug.exceptions import NotFound
 
 class CharactersController:
 
@@ -12,46 +13,17 @@ class CharactersController:
 
             data = self.characters_service.get_characters(page, name)
 
-            characters = data.get('results', [])
-
-            return jsonify({
-                'page': data.get('page', 1),
-                'per_page': data.get('per_page', 20),
-                'page_count': data.get('page_count', 0),
-                'data': [
-                    {
-                        'id': character.id,
-                        'name': character.name,
-                        'status': character.status,
-                        'species': character.species,
-                        'type': character.type,
-                    }
-                    for character in data.get('results', [])
-                ]
-            })
+            return ApiResponse.send(success=True, message='Characters fetched successfully.', data=data, status_code=200)
         except Exception:
-            return jsonify({
-                'error': 'An error occurred while fetching characters.'
-            }), 500
+            return ApiResponse.send(success=False, message='Failed to fetch characters.', data=None, status_code=500)
         
     def get_character_by_id(self, character_id):
         try:
                 character = self.characters_service.get_character_by_id(character_id) # Fetch character by ID
-                if not character:
-                    return jsonify({
-                    'error': 'Character not found.'
-                }), 404
 
-                character_data = character_output_schema_get_all.dump(character)
-                
-                return jsonify({
-                    'data': character_data
-                })
-    
+                return ApiResponse.send(success=True, message='Character fetched successfully.', data=character, status_code=200)
+        except NotFound:
+            return ApiResponse.send(success=False, message='Character not found.', data=None, status_code=404)
+
         except Exception as e:
-            import traceback
-            print("❌ ERRO NO CONTROLLER ❌")
-            print(traceback.format_exc())
-            return jsonify({
-                'error': str(e)
-            }), 500
+            return ApiResponse.send(success=False, message='Failed to fetch character.', data=None, status_code=500)
