@@ -1,4 +1,4 @@
-from src.models.characters_model import Character
+from src.models.characters_model import Character, db
 
 class CharactersRepository:
     def get_characters_by_name(self, name: str, limit: int, offset: int):
@@ -12,6 +12,6 @@ class CharactersRepository:
             return characters, characters_count
     
     def get_character_by_id(self, character_id: int):
-        character = Character.query.get(character_id)
+        character = db.session.get(Character, character_id)
         return character
         
